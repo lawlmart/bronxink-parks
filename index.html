@@ -63,12 +63,19 @@
       #info-header {
         padding:15px;
         padding-bottom:0px;
+        font-size: 15px;
       }
       #info-body {
         padding:15px;
         border-top: 1px solid #eaeaea;
         border-bottom: 1px solid #eaeaea;
         background: #f8f8f8;
+      }
+      #info-footer {
+        font-size: 11px;
+        font-style: italic;
+        padding:15px;
+        color: #555;
       }
       #search {
         width:100%;
@@ -215,16 +222,18 @@
         <h1>The State of Bronx Parks</h1>
         <p style="border-bottom: 1px solid #eaeaea; padding-bottom: 15px; margin-bottom: 15px; font-size: 14px;"><i>By <a href="http://bronxink.org/author/lucas_manfield/">Lucas Manfield</a> for BronxInk, October 6, 2018</i></p>
         <p>
-          Since 1994, the city has inspected its parks and rated their "overall condition" as either acceptable or unacceptable. Over the last year, the percentage of parks in the Bronx passing this test has fluctuated between 85 and 95%, a rate publicized by the city on the Parks Department website.
+          Since 1994, the city has inspected its parkland and rated the "overall condition" of each park. Over the last year, the percentage of parks in the Bronx found "acceptable" has fluctuated between 85 and 95 percent, a rate publicized by the city on the Parks Department website.
         </p>
-        <p>This number, however, conceals wide discrepencies in the condition of individual parks. To establish a basis for comparison, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percent of times each park received an acceptable rating. 
+        <p>This number, however, conceals wide discrepencies in the condition of individual parks.</p>
+        <p>
+          City inspectors have only two options when grading a park's overall condition: passing or failing. Furthermore, this grade reflects only a snapshot in time. To offer a more nuanced comparison between parks, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percentage of times each park passed. 
         </p>
         <p>
           One park stood out. <a href="#" onclick="woodsclick()">University Woods</a>, nestled on a hillside along the borough's eastern border and in dark red on the map, failed to receive a single acceptable rating during this period. <a href="#">Read the story here »</a>
         </p>
       </div>
       <div id="info-body">
-        <h2>How do city inspectors rate your neighborhood park?</h2>
+        <h2>How does your neighborhood park compare?</h2>
         <input id="search" list="parks" placeholder="Look up your park...">
         <datalist id="parks">
         </datalist>
@@ -234,10 +243,11 @@
           <div id="park-score-description">Passed <span id="park-score"></span> of inspections</div>
           <div class="info-item">This park passed <span id="inspection-passes"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016<span id="percentile"></span> Last year, the city spent <span id="cost"></span> and <span id="hours"></span> hour<span id="hour-plural">s</span> each week maintaining this park. <span id="crimes"></span></div>
           <div id="attribution"><a href="" target="_blank" id="link">View park website.</a></div>
-          
         </div>
       </div>
-      <div id="info-footer"></div>
+      <div id="info-footer">
+        Inspection data were obtained from the Parks Department website in early September, 2018. Maintenance data were obtained from the Parks Department and crime data from the NYPD. The source code is available on <a href="https://github.com/lawlmart/bronxink-parks">Github</a>.
+      </div>
       
     </div>
 
@@ -331,7 +341,7 @@
         $("#search").val("")
         $("#link").attr("href", "https://www.nycgovparks.org" + urls[name])
         setTimeout(function(){
-          $("#info").scrollTop(100000);
+          $("#info").scrollTop($("#info-header").height() + 30);
         }, 0);
         
 
