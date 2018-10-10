@@ -32,6 +32,7 @@
         font-family: 'Times New Roman', Times, serif;
         margin: 0;
         padding: 0;
+        
       }
 
       #map {
@@ -41,23 +42,24 @@
         z-index: 0;
       }
       .box {
-        background: white; 
         border-radius: 5px; 
         box-shadow: 0 0 10px rgba(0,0,0,.15);
         position: absolute; 
+        background: #fefefe;
       }
       #info {
        left: 10px; top: 10px; bottom: 10px; width: 360px;
        overflow-y: auto;
       }
+
       #info-header {
         padding:15px;
         padding-bottom:0px;
       }
       #info-body {
         padding:15px;
-        border-top: 1px solid #eee;
-        border-bottom: 1px solid #eee;
+        border-top: 1px solid #ddd;
+        border-bottom: 1px solid #eaeaea;
         background: #f8f8f8;
       }
 
@@ -72,8 +74,10 @@
       @media only screen and (max-width: 600px) {
         #info {
           width: auto;
-          left:10px;
+          left:0px;
+          bottom: 0px;
           top: 50%;
+          border-radius: 0;
         }
       }
 
@@ -109,11 +113,68 @@
       .info-item {
         margin-bottom: 3px;
       }
+
+      #legend {
+        position: absolute;
+        right:20px;
+        bottom: 20px;
+        padding: 15px;
+        padding-bottom:5px;
+        background: rgba(255,255,255, .8);
+        border-radius: 3px;
+      }
+      .legend-item {
+        position: relative;
+        height: 4px;
+        display: inline-block;
+        width: 40px;
+        color: white;
+        font-size: 10px;
+        font-weight: bold;
+        text-align: right;
+        padding-top: 1px;
+        padding-right: 2px;
+      }
+
+      #legend-1 {
+        background: #488f31;
+      }
+      #legend-2 {
+        background: #aab04a;
+      }
+      #legend-3 {
+        background: #ffd07d;
+      }
+      #legend-4 {
+        background: #f18a57;
+      }
+      #legend-5 {
+        background: #de425b;
+      }
+      #legend-title-left {
+        left: 15px;
+      }
+      #legend-title-right {
+        right: 15px;
+      }
+
+      .legend-title {
+        position: absolute;
+        top: 8px;
+        font-size: 12px;
+        font-weight: bold;
+        color: #555
+      }
     </style>
   </head>
   <body>
     
     <div id="map" class="box">
+    </div>
+    <div id="legend">
+      <div id="legend-title-left" class="legend-title">No failed inspections</div>
+      <div id="legend-title-right" class="legend-title">All failed</div>
+      <div class="legend-item" id="legend-1"></div><div class="legend-item" id="legend-2"></div><div class="legend-item" id="legend-3"></div><div class="legend-item" id="legend-4"></div><div class="legend-item" id="legend-5"></div>
     </div>
     <div id="info" class="box">
       <div id="info-header">
@@ -199,7 +260,7 @@
         $("#inspection-failures").text(data[name]['failed_condition'])
         $("#search").val("")
         $("#link").attr("href", "https://www.nycgovparks.org" + urls[name])
-        
+        $("#info").scrollTop(260);
         let b = 0;
         for (let i = 0; i < parkNames.length; i++) {
           const name2 = parkNames[i];
@@ -207,7 +268,7 @@
             b += 1;
           }
         }
-        $("#percentile").text(Math.round(b / parkNames.length * 100) + '%')
+        $("#percentile").text(Math.round(b / parkNames.length * 100 + 1) + '%')
       }
       const layer = new carto.layer.Layer(source, style, {
         featureClickColumns: [ 'signname', 'typecatego', 'omppropid', 'total_inspections', 'failed_condition' ]
