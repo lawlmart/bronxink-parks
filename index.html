@@ -4,7 +4,7 @@
     <title>Mapping the Condition of Bronx Parks | BronxInk | Lucas Manfield</title>
     <meta name="viewport" content="initial-scale=1.0">
     <meta charset="utf-8">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,600,700|Open+Sans:300,400,600" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=PT+Serif" rel="stylesheet">
     <!-- Include Leaflet -->
     <script src="https://unpkg.com/leaflet@1.3.1/dist/leaflet.js"></script>
     <link href="https://unpkg.com/leaflet@1.3.1/dist/leaflet.css" rel="stylesheet">
@@ -38,10 +38,9 @@
       }
 
       body {
-        font-family: 'Times New Roman', Times, serif;
+        font-family: 'PT Serif', serif;
         margin: 0;
         padding: 0;
-        
       }
 
       #map {
@@ -137,18 +136,19 @@
         padding-bottom:5px;
         background: rgba(255,255,255, .8);
         border-radius: 3px;
+        line-height: 0px;
       }
       .legend-item {
         position: relative;
-        height: 4px;
+        height: 6px;
         display: inline-block;
         width: 40px;
         color: white;
         font-size: 10px;
         font-weight: bold;
         text-align: right;
-        padding-top: 1px;
         padding-right: 2px;
+        line-height:6px;
       }
       
       #park-score-description {
@@ -183,14 +183,23 @@
       }
       #legend-title-right {
         right: 15px;
+        float: right;
+      }
+
+      #legend-ticks {
+        border-bottom: 1px solid #888;
+        border-left: 1px solid #888;
+        border-right: 1px solid #888;
+        height: 6px;
+        margin-top: 10px;
+        line-height: 6px;
+        box-sizing: border-box;
       }
 
       .legend-title {
-        position: absolute;
-        top: 8px;
         font-size: 12px;
         font-weight: bold;
-        color: #555
+        color: #555;
       }
     </style>
   </head>
@@ -201,7 +210,7 @@
     <div id="legend">
       <div id="legend-title-left" class="legend-title">All inspections failed</div>
       <div id="legend-title-right" class="legend-title">All passed</div>
-      <div class="legend-item" id="legend-5"></div><div class="legend-item" id="legend-4"></div><div class="legend-item" id="legend-3"></div><div class="legend-item" id="legend-2"></div><div class="legend-item" id="legend-1"></div>
+      <div id="legend-ticks"></div><div class="legend-item" id="legend-5"></div><div class="legend-item" id="legend-4"></div><div class="legend-item" id="legend-3"></div><div class="legend-item" id="legend-2"></div><div class="legend-item" id="legend-1"></div>
     </div>
     <div id="info" class="box">
       <div id="info-header">
@@ -309,7 +318,10 @@
         $("#inspection-passes").text(data[name]['total_inspections'] - data[name]['failed_condition'])
         $("#search").val("")
         $("#link").attr("href", "https://www.nycgovparks.org" + urls[name])
-        $("#info").scrollTop(260);
+        setTimeout(function(){
+          $("#info").scrollTop(100000);
+        }, 0);
+        
 
         $("#park-score").text(Math.round((1 - data[name]['percent_failed_condition']) * 100) + '%')
         $("#park-score").removeClass()
