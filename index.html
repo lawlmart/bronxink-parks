@@ -14,16 +14,27 @@
         box-sizing: border-box;
       }
 
-      
-
       h1, h2, p {
         margin: 0;
         padding: 0;
         margin-bottom:15px;
       }
 
+      h1 {
+        margin-bottom: 5px;
+      }
+
       h2 {
         color: #222;
+        font-size: 17px;
+      }
+
+      a {
+        color: black;
+      }
+
+      a:hover {
+        color: gray;
       }
 
       body {
@@ -46,7 +57,7 @@
         background: #fefefe;
       }
       #info {
-       left: 10px; top: 10px; bottom: 10px; width: 360px;
+       left: 10px; top: 10px; bottom: 10px; width: 440px;
        overflow-y: auto;
       }
 
@@ -56,12 +67,10 @@
       }
       #info-body {
         padding:15px;
-        border-top: 1px solid #ddd;
+        border-top: 1px solid #eaeaea;
         border-bottom: 1px solid #eaeaea;
         background: #f8f8f8;
       }
-
-
       #search {
         width:100%;
         padding:10px;
@@ -196,11 +205,19 @@
     </div>
     <div id="info" class="box">
       <div id="info-header">
-        <h1>Mapping the Condition of Bronx Parks</h1>
-        <h2>How do city inspectors rate your neighborhood park?</h2>
-        <p><i>By Lucas Manfield for BronxInk, October 6, 2018</i></p>
+        <h1>The State of Bronx Parks</h1>
+        <p style="border-bottom: 1px solid #eaeaea; padding-bottom: 15px; margin-bottom: 15px; font-size: 14px;"><i>By <a href="http://bronxink.org/author/lucas_manfield/">Lucas Manfield</a> for BronxInk, October 6, 2018</i></p>
+        <p>
+          Since 1994, the city has inspected its parks and rated their "overall condition" as either acceptable or unacceptable. Over the last year, the percentage of parks in the Bronx passing this test has fluctuated between 85 and 95%.
+        </p>
+        <p>This number, however, conceals wide discrepencies in the condition of individual parks. To establish a basis for comparison, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percent of time each park has received an acceptable rating. 
+        </p>
+        <p>
+          One park stood out. <a href="#" onClick="woodsclick">University Woods</a>, nestled on a hillside along the borough's eastern border and in dark red on the map, failed to receive a single acceptable rating during this period. <a href="#">Read the story here »</a>
+        </p>
       </div>
       <div id="info-body">
+        <h2>How do city inspectors rate your neighborhood park?</h2>
         <input id="search" list="parks" placeholder="Look up your park...">
         <datalist id="parks">
         </datalist>
@@ -208,7 +225,7 @@
           <div id="park-name"></div>
           <div id="park-subtitle"></div>
           <div id="park-score-description">Passed <span id="park-score"></span> of inspections</div>
-          <div class="info-item">This park passed <span id="inspection-passes"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016<span id="percentile"></span> Last year, the city spent <span id="cost"></span> and <span id="hours"></span> hour<span id="hour-plural">s</span> each week maintaining the park. <span id="crimes"></span></div>
+          <div class="info-item">This park passed <span id="inspection-passes"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016<span id="percentile"></span> Last year, the city spent <span id="cost"></span> and <span id="hours"></span> hour<span id="hour-plural">s</span> each week maintaining this park. <span id="crimes"></span></div>
           <div id="attribution"><a href="" target="_blank" id="link">View park website.</a></div>
           
         </div>
@@ -319,7 +336,7 @@
           if (total == 1) {
             html = "There was <b>1</b> major crime reported"
           } else {
-            html = "There were <b>" + total + "</b> major crimes reported"
+            html = "<b>" + total + "</b> major crimes were reported"
           }
           
           const murders = data[name]['murders']
