@@ -187,12 +187,10 @@
       }
 
       #legend-ticks {
-        border-bottom: 1px solid #888;
-        border-left: 1px solid #888;
-        border-right: 1px solid #888;
-        height: 6px;
+        border-left: 1px solid #555;
+        border-right: 1px solid #555;
+        padding-top:4px;
         margin-top: 10px;
-        line-height: 6px;
         box-sizing: border-box;
       }
 
@@ -210,14 +208,14 @@
     <div id="legend">
       <div id="legend-title-left" class="legend-title">All inspections failed</div>
       <div id="legend-title-right" class="legend-title">All passed</div>
-      <div id="legend-ticks"></div><div class="legend-item" id="legend-5"></div><div class="legend-item" id="legend-4"></div><div class="legend-item" id="legend-3"></div><div class="legend-item" id="legend-2"></div><div class="legend-item" id="legend-1"></div>
+      <div id="legend-ticks"><div class="legend-item" id="legend-5"></div><div class="legend-item" id="legend-4"></div><div class="legend-item" id="legend-3"></div><div class="legend-item" id="legend-2"></div><div class="legend-item" id="legend-1"></div></div>
     </div>
     <div id="info" class="box">
       <div id="info-header">
         <h1>The State of Bronx Parks</h1>
         <p style="border-bottom: 1px solid #eaeaea; padding-bottom: 15px; margin-bottom: 15px; font-size: 14px;"><i>By <a href="http://bronxink.org/author/lucas_manfield/">Lucas Manfield</a> for BronxInk, October 6, 2018</i></p>
         <p>
-          Since 1994, the city has inspected its parks and rated their "overall condition" as either acceptable or unacceptable. Over the last year, the percentage of parks in the Bronx passing this test has fluctuated between 85 and 95%.
+          Since 1994, the city has inspected its parks and rated their "overall condition" as either acceptable or unacceptable. Over the last year, the percentage of parks in the Bronx passing this test has fluctuated between 85 and 95%, a rate publicized by the city on the Parks Department website.
         </p>
         <p>This number, however, conceals wide discrepencies in the condition of individual parks. To establish a basis for comparison, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percent of times each park received an acceptable rating. 
         </p>
@@ -304,10 +302,24 @@
       map.zoomControl.setPosition('topright');
 
 
+      function moveTo(name) {
+        if ($( window ).width() > 600) {
+          map.flyToBounds(parkBounds[name], {
+            paddingTopLeft: [440, 0],
+            animate: true,
+          });
+        } else {
+          map.flyToBounds(parkBounds[name], {
+            paddingBottomRight: [0, 300],
+            animate: true,
+          });
+        }
+      }
+
       function woodsclick(e) {
         const name = 'University Woods';
         show(name);
-        map.fitBounds(parkBounds[name]);
+        moveTo(name);
       }
 
       function show(name) {
@@ -418,8 +430,7 @@
       $("#search").on("change", function(e) {
         const name = e.target.value
         show(name);
-
-        map.fitBounds(parkBounds[name]);
+        moveTo(name);
       })
     </script>
     
