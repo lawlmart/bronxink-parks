@@ -210,10 +210,10 @@
         <p>
           Since 1994, the city has inspected its parks and rated their "overall condition" as either acceptable or unacceptable. Over the last year, the percentage of parks in the Bronx passing this test has fluctuated between 85 and 95%.
         </p>
-        <p>This number, however, conceals wide discrepencies in the condition of individual parks. To establish a basis for comparison, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percent of time each park has received an acceptable rating. 
+        <p>This number, however, conceals wide discrepencies in the condition of individual parks. To establish a basis for comparison, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percent of times each park received an acceptable rating. 
         </p>
         <p>
-          One park stood out. <a href="#" onClick="woodsclick">University Woods</a>, nestled on a hillside along the borough's eastern border and in dark red on the map, failed to receive a single acceptable rating during this period. <a href="#">Read the story here »</a>
+          One park stood out. <a href="#" onclick="woodsclick()">University Woods</a>, nestled on a hillside along the borough's eastern border and in dark red on the map, failed to receive a single acceptable rating during this period. <a href="#">Read the story here »</a>
         </p>
       </div>
       <div id="info-body">
@@ -294,6 +294,12 @@
 
       map.zoomControl.setPosition('topright');
 
+
+      function woodsclick(e) {
+        const name = 'University Woods';
+        show(name);
+        map.fitBounds(parkBounds[name]);
+      }
 
       function show(name) {
         $("#park-info").show();
