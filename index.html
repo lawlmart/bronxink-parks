@@ -13,15 +13,23 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:600" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Open+Sans" rel="stylesheet">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/4.7.4/d3.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/britecharts@2/dist/bundled/britecharts.min.js"></script>
     <style>
       * {
         box-sizing: border-box;
       }
 
+      h1, h2, p {
+        margin: 0;
+        padding: 0;
+        margin-bottom:15px;
+      }
+
+      h2 {
+        color: #222;
+      }
+
       body {
-        font-family: Helvetica, sans-serif;
+        font-family: 'Times New Roman', Times, serif;
         margin: 0;
         padding: 0;
       }
@@ -35,13 +43,31 @@
       .box {
         background: white; 
         border-radius: 5px; 
-        box-shadow: 0 0 5px rgba(0,0,0,.1);
+        box-shadow: 0 0 10px rgba(0,0,0,.15);
         position: absolute; 
-        padding:10px;
       }
       #info {
-       left: 10px; top: 10px; bottom: 10px; width: 300px;
+       left: 10px; top: 10px; bottom: 10px; width: 360px;
        overflow-y: auto;
+      }
+      #info-header {
+        padding:15px;
+        padding-bottom:0px;
+      }
+      #info-body {
+        padding:15px;
+        border-top: 1px solid #eee;
+        border-bottom: 1px solid #eee;
+        background: #f8f8f8;
+      }
+
+
+      #search {
+        width:100%;
+        padding:10px;
+        border-radius:3px;
+        font-size: 14px;
+        cursor: pointer;
       }
       @media only screen and (max-width: 600px) {
         #info {
@@ -55,8 +81,33 @@
         display: none;
       }
 
+      #park-name {
+        font-weight: bold;
+        font-size: 24px;
+        margin-bottom: 10px;
+        margin-top: 20px;
+        border-bottom: 1px solid #bbb;
+        padding-bottom: 5px;
+      }
+
       .x-axis-group .tick {
         display: none;
+      }
+
+      #inspection-failures, #inspection-count, #percentile {
+        font-weight: bold;
+        font-size: 20px;
+      }
+
+      #attribution, #attribution a {
+        font-size: 12px;
+        color: #555;
+        margin-top: 10px;
+        font-style: italic;
+      }
+
+      .info-item {
+        margin-bottom: 3px;
       }
     </style>
   </head>
@@ -65,18 +116,23 @@
     <div id="map" class="box">
     </div>
     <div id="info" class="box">
-      <h1>Mapping the Condition of Bronx Parks</h1>
-      <h2>How do city inspectors rate your neighborhood park?</h2>
-      <p><i>By Lucas Manfield for BronxInk, October 6, 2018</i></p>
-      <input id="search" list="parks" placeholder="Look up your park...">
-      <datalist id="parks">
-      </datalist>
-      <div id="park-info">
-        <div id="park-name"></div>
-        <div>Failed <span id="inspection-failures"></span> of <span id="inspection-count"></span> inspections since January 1st, 2016.</div>
-        <div>View on <a href="" target="_blank" id="link">city website.</a></div>
-        <div id="graph"></div>
+      <div id="info-header">
+        <h1>Mapping the Condition of Bronx Parks</h1>
+        <h2>How do city inspectors rate your neighborhood park?</h2>
+        <p><i>By Lucas Manfield for BronxInk, October 6, 2018</i></p>
       </div>
+      <div id="info-body">
+        <input id="search" list="parks" placeholder="Look up your park...">
+        <datalist id="parks">
+        </datalist>
+        <div id="park-info">
+          <div id="park-name"></div>
+          <div class="info-item">Failed <span id="inspection-failures"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016, making it in the worst <span id="percentile"></span> of Bronx parks.</div>
+          <div id="attribution"><a href="" target="_blank" id="link">View on city website.</a></div>
+          
+        </div>
+      </div>
+      <div id="info-footer"></div>
       
     </div>
 
@@ -135,16 +191,29 @@
           }
         }
       `);
+
+      function show(name) {
+        $("#park-info").show();
+        $("#park-name").text(name)
+        $("#inspection-count").text(data[name]['total_inspections'])
+        $("#inspection-failures").text(data[name]['failed_condition'])
+        $("#search").val("")
+        $("#link").attr("href", "https://www.nycgovparks.org" + urls[name])
+        
+        let b = 0;
+        for (let i = 0; i < parkNames.length; i++) {
+          const name2 = parkNames[i];
+          if (data[name2]['percent_failed_condition'] > data[name]['percent_failed_condition']) {
+            b += 1;
+          }
+        }
+        $("#percentile").text(Math.round(b / parkNames.length * 100) + '%')
+      }
       const layer = new carto.layer.Layer(source, style, {
         featureClickColumns: [ 'signname', 'typecatego', 'omppropid', 'total_inspections', 'failed_condition' ]
       });
       layer.on('featureClicked', function(e) {
-        $("#park-info").show();
-        $("#park-name").text(e.data.signname)
-        $("#inspection-count").text(e.data.total_inspections)
-        $("#inspection-failures").text(e.data.failed_condition)
-        $("#search").val("")
-        $("#link").attr("href", "https://www.nycgovparks.org" + urls[e.data.signname])
+        show(e.data.signname)
       });
 
       client.addLayer(layer);
@@ -152,35 +221,8 @@
 
       $("#search").on("change", function(e) {
         const name = e.target.value
-        $("#park-info").show();
-        $("#park-name").text(name)
-        $("#inspection-count").text(data[name]['total_inspections'])
-        $("#inspection-failures").text(data[name]['failed_condition'])
-        $("#search").val("")
-        $("#link").attr("href", "https://www.nycgovparks.org" + urls[e.data.name])
+        show(name);
       })
-
-      let barChart = britecharts.bar(),
-          barContainer = d3.select('#graph');
-
-      barChart
-        .width(300)
-        .colorSchema(britecharts.colors.colorSchemas.britecharts)
-        .valueLabel('percentage')
-        .xAxisLabel("")
-        .height(300)
-        .xTicks(0)
-      
-      const plotData = [
-        { name: 'Shiny', id: 1, quantity: 86, percentage: 5 },
-        { name: 'Blazing', id: 2, quantity: 300, percentage: 18 },
-        { name: 'Dazzling', id: 3, quantity: 276, percentage: 16 },
-        { name: 'Radiant', id: 4, quantity: 195, percentage: 11 },
-        { name: 'Sparkling', id: 5, quantity: 36, percentage: 2 },
-        { name: 'Other', id: 0, quantity: 814, percentage: 48 }
-      ];
-      barContainer.datum(plotData).call(barChart);
-
     </script>
     
   </body>
