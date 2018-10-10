@@ -222,9 +222,9 @@
         <h1>The State of Bronx Parks</h1>
         <p style="border-bottom: 1px solid #eaeaea; padding-bottom: 15px; margin-bottom: 15px; font-size: 14px;"><i>By <a href="http://bronxink.org/author/lucas_manfield/">Lucas Manfield</a> for BronxInk, October 6, 2018</i></p>
         <p>
-          Since 1994, the city has inspected its parkland and rated the "overall condition" of each park. Over the last year, the percentage of parks in the Bronx found "acceptable" has fluctuated between 85 and 95 percent, a rate publicized by the city on the Parks Department website.
+          Since 1994, New York City has inspected its parkland and rated the "overall condition" of each park. Over the last year, the percentage of parks in the Bronx found "acceptable" has fluctuated between 84 and 94 percent, a rate publicized by the city on the Parks Department website.
         </p>
-        <p>This number, however, conceals wide discrepencies in the condition of individual parks.</p>
+        <p>This number, however, conceals wide disparities in the condition of individual parks.</p>
         <p>
           City inspectors have only two options when grading a park's overall condition: passing or failing. Furthermore, this grade reflects only a snapshot in time. To offer a more nuanced comparison between parks, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percentage of times each park passed. 
         </p>
@@ -241,12 +241,12 @@
           <div id="park-name"></div>
           <div id="park-subtitle"></div>
           <div id="park-score-description">Passed <span id="park-score"></span> of inspections</div>
-          <div class="info-item">This park passed <span id="inspection-passes"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016<span id="percentile"></span> Last year, the city spent <span id="cost"></span> and <span id="hours"></span> hour<span id="hour-plural">s</span> each week maintaining this park. <span id="crimes"></span></div>
+          <div class="info-item">This park passed <span id="inspection-passes"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016<span id="percentile"></span> Last year, the city spent <span id="cost"></span> and <span id="hours"></span> hour<span id="hour-plural">s</span> each week maintaining it. <span id="crimes"></span></div>
           <div id="attribution"><a href="" target="_blank" id="link">View park website.</a></div>
         </div>
       </div>
       <div id="info-footer">
-        Inspection data were obtained from the Parks Department website in early September, 2018. Maintenance data were obtained from the Parks Department and crime data from the NYPD. The source code is available on <a href="https://github.com/lawlmart/bronxink-parks">Github</a>.
+        Inspection data were obtained from the Parks Department website in early September, 2018. Maintenance and crime data for 2017  were obtained, respectively, from Parks Department and New York City Police Department reports. The source code for this visualization is available on <a href="https://github.com/lawlmart/bronxink-parks">Github</a>.
       </div>
       
     </div>
@@ -374,9 +374,9 @@
           $("#crimes").show()
           let html = ""
           if (total == 1) {
-            html = "There was <b>1</b> major crime reported"
+            html = "During this time, <b>1</b> major crime was reported"
           } else {
-            html = "<b>" + total + "</b> major crimes were reported"
+            html = "During this time, <b>" + total + "</b> major crimes were reported"
           }
           
           const murders = data[name]['murders']

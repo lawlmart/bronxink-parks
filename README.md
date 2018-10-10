@@ -1,1 +1,1 @@
-# bronxink-parks
+An interactive visualization created for BronxInk, a publication of Columbia Journalism School's introduction to reporting class. Please contact lm3293@columbia.edu with any questions or comments.
