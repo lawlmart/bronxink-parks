@@ -102,7 +102,7 @@
         color: #555;
         float: right;
         position: relative;
-        top: -30px;
+        top: -32px;
       }
 
       .x-axis-group .tick {
@@ -145,20 +145,32 @@
         padding-top: 1px;
         padding-right: 2px;
       }
+      
+      #park-score-description {
+        font-weight: bold;
+        font-size: 16px;
+      }
+      #park-score {
+        color: white;
+        border-radius: 3px;
+        padding: 2px 4px;
+        display: inline-block;
+        margin-bottom: 5px;
+      }
 
-      #legend-1 {
+      #legend-1, #park-score {
         background: #488f31;
       }
-      #legend-2 {
+      #legend-2, #park-score.score-2 {
         background: #aab04a;
       }
-      #legend-3 {
+      #legend-3, #park-score.score-3 {
         background: #ffd07d;
       }
-      #legend-4 {
+      #legend-4, #park-score.score-4 {
         background: #f18a57;
       }
-      #legend-5 {
+      #legend-5, #park-score.score-5 {
         background: #de425b;
       }
       #legend-title-left {
@@ -199,6 +211,7 @@
         <div id="park-info">
           <div id="park-name"></div>
           <div id="park-subtitle"></div>
+          <div id="park-score-description">Passed <span id="park-score"></span> of inspections</div>
           <div class="info-item">This park passed <span id="inspection-passes"></span> of <span id="inspection-count"></span> inspections since the beginning of 2016<span id="percentile"></span> Last year, the city spent <span id="cost"></span> and <span id="hours"></span> hour<span id="hour-plural">s</span> each week maintaining the park. <span id="crimes"></span></div>
           <div id="attribution"><a href="" target="_blank" id="link">View park website.</a></div>
           
@@ -273,6 +286,21 @@
         $("#search").val("")
         $("#link").attr("href", "https://www.nycgovparks.org" + urls[name])
         $("#info").scrollTop(260);
+
+        $("#park-score").text(Math.round((1 - data[name]['percent_failed_condition']) * 100) + '%')
+        $("#park-score").removeClass()
+        if (data[name]['percent_failed_condition'] > .2) {
+          $("#park-score").addClass("score-2");
+        }
+        if (data[name]['percent_failed_condition'] > .4) {
+          $("#park-score").addClass("score-3");
+        }
+        if (data[name]['percent_failed_condition'] > .6) {
+          $("#park-score").addClass("score-4");
+        }
+        if (data[name]['percent_failed_condition'] > .7) {
+          $("#park-score").addClass("score-5");
+        }
 
         $("#cost").text('$' + data[name]['weekly_cost'].toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","))
         $("#hours").text(data[name]['weekly_hours'])
