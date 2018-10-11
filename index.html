@@ -222,14 +222,14 @@
         <h1>The State of Bronx Parks</h1>
         <p style="border-bottom: 1px solid #eaeaea; padding-bottom: 15px; margin-bottom: 15px; font-size: 14px;"><i>By <a href="http://bronxink.org/author/lucas_manfield/">Lucas Manfield</a> for BronxInk, October 6, 2018</i></p>
         <p>
-          Since 1994, New York City has inspected its parkland and rated the "overall condition" of each park. Over the last year, the percentage of parks in the Bronx found "acceptable" has fluctuated between 84 and 94 percent, a rate publicized by the city on the Parks Department website.
+          Since 1994, New York City has inspected its parkland and rated the "overall condition" of each park. Over the last year, the percentage of parks in the Bronx deemed "acceptable" has fluctuated between 84 and 94 percent, a rate publicized by the city on the Parks Department website.
         </p>
         <p>This number, however, conceals wide disparities in the condition of individual parks.</p>
         <p>
-          City inspectors have only two options when grading a park's overall condition: passing or failing. Furthermore, this grade reflects only a snapshot in time. To offer a more nuanced comparison between parks, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percentage of times each park passed. 
+          City inspectors have only two options when grading a park's overall condition: passing or failing. Furthermore, this grade only reflects a snapshot in time. To offer a more nuanced comparison between parks, BronxInk compiled inspection data from the beginning of 2016 to August 2018 and calculated the percentage of times each park passed. 
         </p>
         <p>
-          One park stood out. <a href="#" onclick="woodsclick()">University Woods</a>, nestled on a hillside along the borough's western border and in dark red on the map, failed to receive a single acceptable rating during this period. <a href="#">Read the story here »</a>
+          One park stood out: <a href="#" onclick="woodsclick()">University Woods</a>, nestled on a hillside along the borough's western border and in dark red on the map, failed to receive a single acceptable rating during this period. <a href="#">Read the story here »</a>
         </p>
       </div>
       <div id="info-body">
@@ -263,7 +263,7 @@
         datalist.append("<option value=\"" + name + "\">")
       }
 
-      const map = L.map('map').setView([40.8448, -73.915], 12);
+      const map = L.map('map').setView([40.8448, -73.915], 13);
       L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
         maxZoom: 18,
       }).addTo(map);
